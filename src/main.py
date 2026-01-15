@@ -1,7 +1,8 @@
+import uuid
+
+import chromadb
 from click import prompt
 from langchain_ollama import ChatOllama
-import chromadb
-import uuid
 
 llm = ChatOllama(
     model="phi3:mini",
@@ -13,7 +14,7 @@ chroma_client = chromadb.PersistentClient("./chroma_db")
 
 collection = chroma_client.get_or_create_collection(name="concontra")
 
-with open("csv/concontrata.csv", "r", encoding="utf-8") as f:
+with open("docs/langchain_ollama.md", "r", encoding="utf-8") as f:
 
     policies: list[str] = f.read().splitlines()
 
@@ -42,10 +43,11 @@ messages = [
     },
     {
         "role": "user",
-        "content": f"Que facilidades hay de pago online?, Use this as context for answering: {prompt}",
+        "content": f"What is Ollama?, Use this as context for answering: {prompt}",
     },
 ]
 
+print("comienza la consulta al modelo ************************\n\n")
 ai_msg = llm.invoke(messages)
 
 print(ai_msg)
